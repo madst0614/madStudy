@@ -8,15 +8,18 @@ public class Problem1330 {
 		Scanner sc=new Scanner(System.in);
 		int a,b;
 		
+		while(sc.hasNextInt())
+
+		{
 		a=sc.nextInt();
 		b=sc.nextInt();
 		
 		if(a<b)
 			System.out.println("<");
 		else if(a==b)
-			System.out.println("=");
+			System.out.println("==");
 		else
 			System.out.println(">");
-		
+		}
 	}
 }
