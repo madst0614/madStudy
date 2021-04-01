@@ -1,8 +1,8 @@
 package stage1;
-
 import java.util.Scanner;
+import java.math.BigDecimal;
 
-public class Problem1001 {
+public class Problem1008 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -11,6 +11,10 @@ public class Problem1001 {
 		a=keyboard.nextInt();
 		b=keyboard.nextInt();
 		
-		System.out.printf("%d",a-b);
+		BigDecimal number1=new BigDecimal(a);
+		BigDecimal number2=new BigDecimal(b);
+		
+		System.out.println(number1.divide(number2, 10, BigDecimal.ROUND_HALF_DOWN));
 	}
+
 }
