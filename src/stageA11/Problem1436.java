@@ -1,3 +1,4 @@
+package stageA11;
 import java.util.Scanner;
 
 public class Problem1436 {
