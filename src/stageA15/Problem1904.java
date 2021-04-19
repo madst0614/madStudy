@@ -41,11 +41,10 @@ public class Problem1904 {
 		int maxNum = 1000001;
 		storedFact = new int[maxNum];
 		int n = Integer.parseInt(br.readLine());
-//
-//		System.out.println(zeroOneTile(n) % 15746);
 		
-		initFact(4);
-		System.out.println(storedFact[2]);
+		initFact(n);
+		System.out.println(zeroOneTile(n) % 15746);
+		
 	}
 
 }
