@@ -5,33 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Problem1904 {
-	static int[] storedFact;
+	static int[] storedFibMod;
 
-	
-	
-	public static void initFact(int n) {
-		for(int i=0; i<2; i++) {
-			storedFact[i]=1;
-		}
-		
-		for(int div=n%2+2; div<=n; div+=2) {
-			storedFact[div]=(div)*(div-1)*storedFact[div-2];
-		}
+	public static void initStore() {
+		storedFibMod[0] = 1;
+		storedFibMod[1] = 1;
 	}
-	
+
 	public static int zeroOneTile(int n) {
-		int possibleCase=1;
-		int num=n/2;
-		while(num!=0) {
-			if(n%2==0) {
-				possibleCase++;
-				num--;
-			}else {
-				
-			}
-			
+		for (int i = 2; i < n + 1; i++) {
+			storedFibMod[i] = (storedFibMod[i - 1] + storedFibMod[i - 2]) % 15746;
 		}
-		return possibleCase;
+		return storedFibMod[n];
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -39,12 +24,12 @@ public class Problem1904 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int maxNum = 1000001;
-		storedFact = new int[maxNum];
+		storedFibMod = new int[maxNum];
 		int n = Integer.parseInt(br.readLine());
-		
-		initFact(n);
-		System.out.println(zeroOneTile(n) % 15746);
-		
+
+		initStore();
+		System.out.println(zeroOneTile(n));
+
 	}
 
 }
