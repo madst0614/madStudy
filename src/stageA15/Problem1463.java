@@ -3,7 +3,12 @@ package stageA15;
 import java.util.Scanner;
 
 public class Problem1463 {
+	static int[][] DP; // row=two, col=three
 
+	static int findMinOp(int N, int row, int col) {
+		
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc=new Scanner(System.in);
@@ -17,7 +22,7 @@ public class Problem1463 {
 			i/=2;
 			n++;
 		}
-		System.out.println(n);
+		DP=new int[n][n];
 	}
 
 }
