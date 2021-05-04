@@ -46,11 +46,13 @@ public class Problem1780 {
 		int rowThird = (rowEnd - rowStart + 1) / 3;
 		int colThird = (colEnd - colStart + 1) / 3;
 
-		for (int i = rowStart; i < rowEnd; i += rowThird) {
-			for (int j = colStart; j < colEnd; j += colThird) {
-				System.out.println(i + " " + (i + rowThird - 1) + " " + j + " " + (j + colThird - 1));
+		// Terminal 조건 (i<rowEnd)에 '='이 포함되어야 하는 이유
+		// 0~2 3~5 6~8엔 필요 없지만, 범위가 좀 더 세밀한 경우 예를 들어
+		// 0~0, 1~1, 2~2 같은 경우 rowEnd가 포함되어야 한다
+		// 코드를 짤 떄, 세밀한 부분을 놓치지 않도록 조심. 최대한 타이트하게 조건을 맞추도록 짠다면 실수할 일은 없을 것이다.
+		for (int i = rowStart; i <= rowEnd; i += rowThird) {
+			for (int j = colStart; j <= colEnd; j += colThird) {
 				solution(i, i + rowThird - 1, j, j + colThird - 1);
-				System.out.println();
 			}
 		}
 	}
