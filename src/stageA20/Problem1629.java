@@ -13,7 +13,7 @@ public class Problem1629 {
 
 		long subSol = solution(A, B / 2, C) % C;
 		if (B % 2 == 1)
-			return (subSol * subSol * (A % C)) % C;
+			return (((subSol * subSol) % C) * (A % C)) % C;
 		else
 			return (subSol * subSol) % C;
 
