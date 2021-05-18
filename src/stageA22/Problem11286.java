@@ -15,13 +15,10 @@ public class Problem11286 {
 		int absNum = Math.abs(num);
 
 		while (i != 1 && absNum <= Math.abs(heap[i / 2])) {
-			if(absNum == Math.abs(heap[i / 2]))
-				if(num>heap[i/2]) {
-					if(i/2==1)
-						break;
-					
-				}
-					
+			if (absNum == Math.abs(heap[i / 2]))
+				if (num > heap[i / 2])
+					break;
+
 			heap[i] = heap[i / 2];
 			i /= 2;
 		}
@@ -41,11 +38,22 @@ public class Problem11286 {
 		int child = 2;
 
 		while (child <= heapSize) {
-			if (child < heapSize && Math.abs(heap[child]) > Math.abs(heap[child + 1]))
-				child++;
+			if (child < heapSize) {
+				if (Math.abs(heap[child]) > Math.abs(heap[child + 1]))
+					child++;
 
-			if (absTemp <= Math.abs(heap[child]))
+				else if (Math.abs(heap[child]) == Math.abs(heap[child + 1])) {
+					if (heap[child] > heap[child + 1])
+						child++;
+				}
+			}
+
+			if (absTemp < Math.abs(heap[child]))
 				break;
+
+			if (absTemp == Math.abs(heap[child]))
+				if (temp < heap[child])
+					break;
 
 			heap[parent] = heap[child];
 			parent = child;
