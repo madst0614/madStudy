@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Problem3055 {
-	static char[][] map;
+	static Integer[][] map;
 	static int[] dx = { 0, 0, -1, 1 };
 	static int[] dy = { -1, 1, 0, 0 };
 
@@ -30,79 +30,70 @@ public class Problem3055 {
 		}
 	}
 
-	private static boolean nearByWater(int R, int C, int x, int y) {
+	private static void water(int R, int C) {
+		Queue<Point> q = new LinkedList<Point>();
 
-		for (int i = 0; i < 4; i++) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-
-			if (nx < 0 || ny < 0 || nx >= R || ny >= C)
-				continue;
-
-			if (map[nx][ny] == '*')
-				return true;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (map[i][j] != null && map[i][j] == 0)
+					q.add(new Point(i, j, 0));
+			}
 		}
-		return false;
+
+		while (!q.isEmpty()) {
+			Point p = q.remove();
+
+			for (int i = 0; i < 4; i++) {
+				int nx = p.x + dx[i];
+				int ny = p.y + dy[i];
+
+				if (nx < 0 || ny < 0 || nx >= R || ny >= C)
+					continue;
+
+				if (map[nx][ny] == null)
+					continue;
+
+				if (map[nx][ny] == 101) {
+					map[nx][ny] = map[p.x][p.y] + 1;
+					q.add(new Point(nx, ny));
+				}
+			}
+		}
 	}
 
 	private static void solution(int R, int C, Point S, Point D) {
 		Queue<Point> q = new LinkedList<Point>();
 
 		q.add(S);
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
-				if (map[i][j] == '*') {
-					q.add(new Point(i, j));
-				}
-			}
-		}
 
-		map[S.x][S.y] = '.';
-		int time = 0;
-
+		water(R, C);
 		while (!q.isEmpty()) {
 			Point p = q.remove();
 
-			if (map[p.x][p.y] == '.') {
-				for (int i = 0; i < 4; i++) {
-					int nx = p.x + dx[i];
-					int ny = p.y + dy[i];
-
-					if (nx < 0 || ny < 0 || nx >= R || ny >= C)
-						continue;
-
-					if (nx == D.x && ny == D.y) {
-						System.out.println(p.t + 1);
-						return;
-					}
-
-					if (nearByWater(R, C, nx, ny))
-						continue;
-
-					if (map[nx][ny] == '.') {
-						q.add(new Point(nx, ny, p.t + 1));
-					}
-
-				}
+			if (p.x == D.x && p.y == D.y) {
+				System.out.println(p.t);
+				return;
 			}
 
-			else {
-				for (int i = 0; i < 4; i++) {
-					int nx = p.x + dx[i];
-					int ny = p.y + dy[i];
+			for (int i = 0; i < 4; i++) {
+				int nx = p.x + dx[i];
+				int ny = p.y + dy[i];
 
-					if (nx < 0 || ny < 0 || nx >= R || ny >= C)
-						continue;
+				if (nx < 0 || ny < 0 || nx >= R || ny >= C)
+					continue;
 
-					if (map[nx][ny] == '.') {
-						map[nx][ny] = '*';
-						q.add(new Point(nx, ny, p.t + 1));
-					}
+				// 'X'
+				if (map[nx][ny] == null)
+					continue;
 
+				if (p.t + 1 < map[nx][ny]) {
+					q.add(new Point(nx, ny, p.t + 1));
+					map[nx][ny] = -1;
 				}
-			}
 
+			}
 		}
+
 		System.out.println("KAKTUS");
 	}
 
@@ -113,7 +104,7 @@ public class Problem3055 {
 
 		int R = Integer.parseInt(st.nextToken());
 		int C = Integer.parseInt(st.nextToken());
-		map = new char[R][C];
+		map = new Integer[R][C];
 
 		Point S = new Point(-1, -1);
 		Point D = new Point(-1, -1);
@@ -121,13 +112,23 @@ public class Problem3055 {
 		for (int i = 0; i < map.length; i++) {
 			StringBuffer str = new StringBuffer(br.readLine());
 			for (int j = 0; j < map[i].length; j++) {
-				map[i][j] = str.charAt(j);
-				if (map[i][j] == 'S') {
-					S = new Point(i, j);
+				char c = str.charAt(j);
+				if (c == 'S') {
+					S = new Point(i, j, 0);
+					map[i][j] = 101;
 				}
 
-				if (map[i][j] == 'D') {
-					D = new Point(i, j);
+				if (c == 'D') {
+					D = new Point(i, j, 0);
+					map[i][j] = Integer.MAX_VALUE;
+				}
+
+				if (c == '.') {
+					map[i][j] = 101;
+				}
+
+				if (c == '*') {
+					map[i][j] = 0;
 				}
 			}
 		}
